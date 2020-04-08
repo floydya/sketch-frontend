@@ -21,7 +21,7 @@ export default withFormik({
   handleSubmit: async (values, form) => {
     const errors = await thunkDispatch(userActions.loginUser(values));
     console.log(errors);
-    await form.setSubmitting(false);
+    form.setSubmitting(false);
   },
   validationSchema: loginSchema
 })(LoginForm);

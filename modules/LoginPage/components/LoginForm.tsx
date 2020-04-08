@@ -18,9 +18,11 @@ const LoginForm = ({
 }) => {
   return (
     <Row className={classNames(classes.container)}>
-      <Col span={8} offset={8}>
-        <h2>Авторизация</h2>
-        <p>Введите свои учетные данные для авторизации.</p>
+      <Col span={6} offset={9}>
+        <section className={classes.headSection}>
+          <h2>Авторизация</h2>
+          <p>Введите свои учетные данные для авторизации.</p>
+        </section>
         <form onSubmit={handleSubmit} className="ant-form ant-form-horizontal">
           <FormItem
             validateStatus={touched.username && errors.username && "error"}
@@ -48,11 +50,14 @@ const LoginForm = ({
               onBlur={handleBlur}
             />
           </FormItem>
-          <FormItem
-            wrapperCol={{ span: 8, offset: 8 }}
-            className={classes.center}
-          >
-            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+          <FormItem>
+            <Button
+              className={classes.w100}
+              size="large"
+              type="primary"
+              htmlType="submit"
+              loading={isSubmitting}
+            >
               Автозироваться
             </Button>
           </FormItem>

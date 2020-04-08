@@ -34,7 +34,6 @@ const userActions = {
     axios.get("/me").then(
       (response) => dispatch(userActions.setUser(response.data)),
       () => {
-        localStorage.removeItem("token");
         dispatch(userActions.removeToken())
       }
     );

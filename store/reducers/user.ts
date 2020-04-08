@@ -16,9 +16,11 @@ function userReducer(
 ) {
   switch (action.type) {
     case UserActionsEnum.setToken:
+      localStorage.setItem("token", action.token);
       return Object.assign({}, state, { token: action.token });
     case UserActionsEnum.removeToken:
-      return Object.assign({}, state, { token: null, user: null });
+      localStorage.removeItem("token");
+      return Object.assign({}, state, { token: null, user: null, isLoading: false });
     case UserActionsEnum.setUser:
       return Object.assign({}, state, { user: action.user, isLoading: false });
     case UserActionsEnum.setLoading:

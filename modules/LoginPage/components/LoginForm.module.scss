@@ -1,4 +1,6 @@
 .container {
+  padding: 35px 0;
+
   & h2,
   & p {
     text-align: center;
@@ -7,4 +9,12 @@
 
 .center {
   text-align: center;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.headSection {
+  margin-bottom: 60px;
 }

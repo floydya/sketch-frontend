@@ -37,9 +37,9 @@ const App = ({ Component, pageProps, currentRoute }) => {
   );
 };
 
-App.getInitialProps = ({ router: { route } }) => {
+App.getInitialProps = (ctx: { router: { route: string; }; }) => {
   return {
-    currentRoute: route,
+    currentRoute: ctx.router.route,
   };
 };
 
