@@ -1,49 +1,44 @@
 import React from "react";
 import Link from "next/link";
-import { Layout, Menu, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Layout } from "antd";
 import { connect } from "react-redux";
 import classes from "./Navbar.module.scss";
 import { IStore } from "~/store";
 import { userActions } from "~/store/actions";
 import { IUserState } from "~/store/types/user";
+import UserDropdown from "./UserDropdown";
+import classNames from "classnames";
 
 const { Header } = Layout;
 
 interface INavbar {
-  currentRoute: string;
   user: IUserState;
+  logoutUser: () => void;
 }
 
-const Navbar: React.FC<INavbar> = ({ currentRoute, user }) => {
-  console.log(user);
+const Navbar: React.FC<INavbar> = ({ user, logoutUser }) => {
   return (
-    <Header className={classes.header}>
+    <Header className={classNames(classes.header, "ant-menu", "ant-menu-dark")}>
       <Link href="/">
         <a>
           <div className={classes.logo} />
         </a>
       </Link>
       <div className={classes.navbarSpace} />
-      <Dropdown
-        overlay={
-          <Menu>
-            <Menu.Item key="0">
-              <a href="http://www.alipay.com/">1st menu item</a>
-            </Menu.Item>
-            <Menu.Item key="1">
-              <a href="http://www.taobao.com/">2nd menu item</a>
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item key="3">3rd menu item</Menu.Item>
-          </Menu>
-        }
-        trigger={["click"]}
-      >
-        <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-          Click me <DownOutlined />
-        </a>
-      </Dropdown>
+      {user.user ? (
+        <UserDropdown user={user.user} logout={logoutUser} />
+      ) : (
+        <React.Fragment>
+          <Link href="/login">
+            <a className="ant-menu-item">Войти</a>
+          </Link>
+          <Link href="/register">
+            <a className={classNames("ant-menu-item", classes.registerButton)}>
+              Зарегистрироваться
+            </a>
+          </Link>
+        </React.Fragment>
+      )}
     </Header>
   );
 };

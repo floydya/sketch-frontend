@@ -1,20 +1,24 @@
 import React, { useEffect } from "react";
-import { Layout } from "antd";
-import Navbar from "~/components/Navbar";
+import { Cookies } from "react-cookie";
 import { Provider } from "react-redux";
+import { Layout } from "antd";
 
-import "antd/dist/antd.css";
-import classes from "~/assets/styles/_app.module.scss";
+import Navbar from "~/components/Navbar";
 import store, { thunkDispatch } from "~/store";
 import { userActions } from "~/store/actions";
 
+import "antd/dist/antd.css";
+import "~/assets/styles/index.scss";
+import classes from "~/assets/styles/_app.module.scss";
+
 const { Content, Footer } = Layout;
 
-const App = ({ Component, pageProps, currentRoute }) => {
+const cookies = new Cookies();
+
+const App = ({ Component, pageProps }) => {
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = cookies.get("token");
     if (token) {
-      store.dispatch(userActions.setToken(token));
       thunkDispatch(userActions.fetchUser());
     }
   }, []);
@@ -22,7 +26,7 @@ const App = ({ Component, pageProps, currentRoute }) => {
   return (
     <Provider store={store}>
       <Layout>
-        <Navbar currentRoute={currentRoute} />
+        <Navbar />
         <Content className={classes["ant-layout-content"]}>
           <div id="breadcrumbs" className={classes.breadcrumbs} />
           <Layout className={classes["ant-layout"]}>
@@ -37,10 +41,10 @@ const App = ({ Component, pageProps, currentRoute }) => {
   );
 };
 
-App.getInitialProps = (ctx: { router: { route: string; }; }) => {
-  return {
-    currentRoute: ctx.router.route,
-  };
-};
+// App.getInitialProps = (ctx: { router: { route: string; }; }) => {
+//   return {
+//     currentRoute: ctx.router.route,
+//   };
+// };
 
 export default App;

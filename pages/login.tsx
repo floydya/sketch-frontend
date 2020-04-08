@@ -1,8 +1,9 @@
 import React from "react";
 import Head from "next/head";
-import {LoginForm} from "~/modules";
+import { LoginForm } from "~/modules";
+import { privateRoute } from "~/core";
 
-export default () => (
+const LoginPage = () => (
   <React.Fragment>
     <Head>
       <title>Авторизация</title>
@@ -10,3 +11,5 @@ export default () => (
     <LoginForm />
   </React.Fragment>
 );
+
+export default privateRoute.withoutAuthentication(LoginPage);

@@ -31,7 +31,7 @@ const userActions = {
   }),
   fetchUser: (): ThunkResult<void> => (dispatch) => {
     dispatch(userActions.setLoading(true));
-    axios.get("/me").then(
+    Promise.resolve({data: {id: 1, username: "admin", email: "email@email.com", avatar: "https://api.adorable.io/avatars/285/raduga.png"}}).then(
       (response) => dispatch(userActions.setUser(response.data)),
       () => {
         dispatch(userActions.removeToken())

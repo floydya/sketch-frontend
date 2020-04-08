@@ -18,9 +18,11 @@ const RegisterForm = ({
 }) => {
   return (
     <Row className={classNames(classes.container)}>
-      <Col span={8} offset={8}>
-        <h2>Регистрация</h2>
-        <p>Заполните поля ниже для регистрации.</p>
+      <Col span={6} offset={9}>
+        <section className={classes.headSection}>
+          <h2>Регистрация</h2>
+          <p>Заполните поля ниже для регистрации.</p>
+        </section>
         <form onSubmit={handleSubmit} className="ant-form ant-form-horizontal">
           <FormItem
             validateStatus={touched.username && errors.username && "error"}
@@ -49,7 +51,11 @@ const RegisterForm = ({
             />
           </FormItem>
           <FormItem
-            validateStatus={touched.password && errors.password ? "error" : values.password === values.password2 && "success"}
+            validateStatus={
+              touched.password && errors.password
+                ? "error"
+                : values.password === values.password2 && "success"
+            }
             help={touched.password && errors.password}
           >
             <Input.Password
@@ -62,7 +68,11 @@ const RegisterForm = ({
             />
           </FormItem>
           <FormItem
-            validateStatus={touched.password2 && errors.password2 ? "error" : values.password === values.password2 && "success"}
+            validateStatus={
+              touched.password2 && errors.password2
+                ? "error"
+                : values.password === values.password2 && "success"
+            }
             help={touched.password2 && errors.password2}
           >
             <Input.Password
@@ -74,11 +84,14 @@ const RegisterForm = ({
               onBlur={handleBlur}
             />
           </FormItem>
-          <FormItem
-            wrapperCol={{ span: 8, offset: 8 }}
-            className={classes.center}
-          >
-            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+          <FormItem>
+            <Button
+              className={classes.w100}
+              size="large"
+              type="primary"
+              htmlType="submit"
+              loading={isSubmitting}
+            >
               Зарегистрироваться
             </Button>
           </FormItem>

@@ -1,8 +1,9 @@
 import React from "react";
 import Head from "next/head";
-import {RegisterForm} from "~/modules";
+import { RegisterForm } from "~/modules";
+import { privateRoute } from "~/core";
 
-export default () => (
+const RegisterPage = () => (
   <React.Fragment>
     <Head>
       <title>Регистрация</title>
@@ -10,3 +11,5 @@ export default () => (
     <RegisterForm />
   </React.Fragment>
 );
+
+export default privateRoute.withoutAuthentication(RegisterPage);

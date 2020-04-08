@@ -1,0 +1,5 @@
+.userMenuLink {
+  & span:not(:last-of-type) {
+    margin-right: 10px;
+  }
+}

@@ -29,6 +29,7 @@ const LoginForm = ({
             help={touched.username && errors.username}
           >
             <Input
+              size="large"
               placeholder="Имя пользователя"
               prefix={<UserOutlined />}
               name="username"
@@ -42,6 +43,7 @@ const LoginForm = ({
             help={touched.password && errors.password}
           >
             <Input.Password
+              size="large"
               placeholder="Пароль..."
               prefix={<KeyOutlined />}
               name="password"
@@ -62,9 +64,12 @@ const LoginForm = ({
             </Button>
           </FormItem>
         </form>
-        <div className={classes.center}>
+        <div className={classes.links}>
           <Link href="/register">
             <a>Зарегистрироваться</a>
+          </Link>
+          <Link href="/forgot-password">
+            <a>Забыли пароль?</a>
           </Link>
         </div>
       </Col>

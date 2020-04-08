@@ -1,6 +1,11 @@
 export interface IUserState {
   token?: string;
-  user?: object;
+  user?: {
+    id: number;
+    username: string;
+    email: string;
+    avatar: string;
+  };
   isLoading: boolean;
 }
 

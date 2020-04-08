@@ -3,9 +3,12 @@ import {
   UserActionsEnum,
   UserReducerAction,
 } from "../types/user";
+import { Cookies } from "react-cookie";
+
+const cookies = new Cookies();
 
 export const initialState: IUserState = {
-  token: null,
+  token: cookies.get('token') || null,
   user: null,
   isLoading: false,
 };
@@ -16,10 +19,10 @@ function userReducer(
 ) {
   switch (action.type) {
     case UserActionsEnum.setToken:
-      localStorage.setItem("token", action.token);
+      cookies.set("token", action.token);
       return Object.assign({}, state, { token: action.token });
     case UserActionsEnum.removeToken:
-      localStorage.removeItem("token");
+      cookies.remove("token");
       return Object.assign({}, state, { token: null, user: null, isLoading: false });
     case UserActionsEnum.setUser:
       return Object.assign({}, state, { user: action.user, isLoading: false });
