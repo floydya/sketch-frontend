@@ -1,0 +1,24 @@
+main.ant-layout-content {
+  padding: 0 50px;
+}
+
+section.ant-layout {
+  padding: 24px 0;
+  background-color: #ffffff;
+}
+
+section.ant-layout main.ant-layout-content,
+.inner-layout {
+  padding: 0 24px;
+  min-height: 280px;
+}
+
+footer.ant-layout-footer {
+  text-align: center;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+}
