@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import FormItem from "antd/lib/form/FormItem";
-import { Input, Button, Row, Col } from "antd";
+import { Input, Button, Col } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 
 import classes from "./LoginForm.module.scss";
@@ -17,8 +17,8 @@ const LoginForm = ({
   handleBlur,
 }) => {
   return (
-    <Row className={classNames(classes.container)}>
-      <Col span={6} offset={9}>
+    <div className={classNames(classes.container)}>
+      <Col sm={{span: 6, offset: 9}}>
         <section className={classes.headSection}>
           <h2>Авторизация</h2>
           <p>Введите свои учетные данные для авторизации.</p>
@@ -73,7 +73,7 @@ const LoginForm = ({
           </Link>
         </div>
       </Col>
-    </Row>
+    </div>
   );
 };
 

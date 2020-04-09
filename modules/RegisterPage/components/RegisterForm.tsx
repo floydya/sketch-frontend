@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import FormItem from "antd/lib/form/FormItem";
-import { Input, Button, Row, Col } from "antd";
+import { Input, Button, Col } from "antd";
 import { UserOutlined, KeyOutlined, MailOutlined } from "@ant-design/icons";
 
 import classes from "./RegisterForm.module.scss";
@@ -17,19 +17,20 @@ const RegisterForm = ({
   handleBlur,
 }) => {
   return (
-    <Row className={classNames(classes.container)}>
-      <Col span={6} offset={9}>
+    <div className={classNames(classes.container)}>
+      <Col sm={{ span: 6, offset: 9 }}>
         <section className={classes.headSection}>
           <h2>Регистрация</h2>
           <p>Заполните поля ниже для регистрации.</p>
         </section>
-        <form onSubmit={handleSubmit} className="ant-form ant-form-horizontal">
+        <form onSubmit={handleSubmit} className="ant-form ant-form-vertical">
           <FormItem
+            label="Имя пользователя"
             validateStatus={touched.username && errors.username && "error"}
             help={touched.username && errors.username}
           >
             <Input
-              placeholder="Имя пользователя"
+              size="large"
               prefix={<UserOutlined />}
               name="username"
               value={values.username}
@@ -38,11 +39,12 @@ const RegisterForm = ({
             />
           </FormItem>
           <FormItem
+            label="E-Mail"
             validateStatus={touched.email && errors.email && "error"}
             help={touched.email && errors.email}
           >
             <Input
-              placeholder="E-mail"
+              size="large"
               prefix={<MailOutlined />}
               name="email"
               value={values.email}
@@ -51,6 +53,7 @@ const RegisterForm = ({
             />
           </FormItem>
           <FormItem
+            label="Пароль"
             validateStatus={
               touched.password && errors.password
                 ? "error"
@@ -59,7 +62,7 @@ const RegisterForm = ({
             help={touched.password && errors.password}
           >
             <Input.Password
-              placeholder="Пароль..."
+              size="large"
               prefix={<KeyOutlined />}
               name="password"
               value={values.password}
@@ -68,6 +71,7 @@ const RegisterForm = ({
             />
           </FormItem>
           <FormItem
+            label="Повторите пароль"
             validateStatus={
               touched.password2 && errors.password2
                 ? "error"
@@ -76,7 +80,7 @@ const RegisterForm = ({
             help={touched.password2 && errors.password2}
           >
             <Input.Password
-              placeholder="Повторите пароль..."
+              size="large"
               prefix={<KeyOutlined />}
               name="password2"
               value={values.password2}
@@ -102,7 +106,7 @@ const RegisterForm = ({
           </Link>
         </div>
       </Col>
-    </Row>
+    </div>
   );
 };
 

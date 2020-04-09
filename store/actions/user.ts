@@ -10,6 +10,7 @@ import {
 import { axios } from "~/core";
 import { ThunkAction } from "redux-thunk";
 import { thunkDispatch } from "..";
+import { LoginFormValues } from "~/modules/LoginPage/containers";
 
 type ThunkResult<R> = ThunkAction<R, IUserState, undefined, UserReducerAction>;
 
@@ -38,7 +39,8 @@ const userActions = {
       }
     );
   },
-  loginUser: (data): ThunkResult<object> => (dispatch) => {
+  loginUser: (data: LoginFormValues): ThunkResult<object> => (dispatch) => {
+    dispatch(userActions.setLoading(true));
     return axios.post(`/auth/obtain`, data).then(
       (response) => {
         dispatch(userActions.setToken(response.data.token));

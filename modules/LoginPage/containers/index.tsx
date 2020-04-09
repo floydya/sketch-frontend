@@ -9,9 +9,9 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required(),
 });
 
-type Values = Yup.InferType<typeof loginSchema>;
+export type LoginFormValues = Yup.InferType<typeof loginSchema>;
 
-const initialValues: Values = {
+const initialValues: LoginFormValues = {
   username: "",
   password: "",
 }
@@ -19,7 +19,8 @@ const initialValues: Values = {
 export default withFormik({
   mapPropsToValues: () => initialValues,
   handleSubmit: async (values, form) => {
-    const errors = await thunkDispatch(userActions.loginUser(values));
+    const formData = {username: values.username, password: values.password};
+    const errors = await thunkDispatch(userActions.loginUser(formData));
     console.log(errors);
     form.setSubmitting(false);
   },

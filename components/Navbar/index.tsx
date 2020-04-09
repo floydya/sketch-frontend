@@ -30,11 +30,11 @@ const Navbar: React.FC<INavbar> = ({ user, logoutUser }) => {
       ) : (
         <React.Fragment>
           <Link href="/login">
-            <a className="ant-menu-item">Войти</a>
+            <a className="ant-menu-item">Вход</a>
           </Link>
           <Link href="/register">
             <a className={classNames("ant-menu-item", classes.registerButton)}>
-              Зарегистрироваться
+              Регистрация
             </a>
           </Link>
         </React.Fragment>
