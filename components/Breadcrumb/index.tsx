@@ -1,12 +1,12 @@
-import React from "react";
-import { Breadcrumb as BaseBreadcrumb } from "antd";
-import { Portal } from "~/components";
+import React from 'react'
+import { Breadcrumb as BaseBreadcrumb } from 'antd'
+import { Portal } from '~/components'
 
 interface IBreadcrumbs {
   items: {
-    name: string;
-    href?: string;
-  }[];
+    name: string
+    href?: string
+  }[]
 }
 
 const Breadcrumb: React.FC<IBreadcrumbs> = ({ items }) => (
@@ -17,6 +17,6 @@ const Breadcrumb: React.FC<IBreadcrumbs> = ({ items }) => (
       ))}
     </BaseBreadcrumb>
   </Portal>
-);
+)
 
-export default Breadcrumb;
+export default Breadcrumb

@@ -1,11 +1,11 @@
-import React from "react";
-import classNames from "classnames";
-import FormItem from "antd/lib/form/FormItem";
-import { Input, Button, Col } from "antd";
-import { UserOutlined, KeyOutlined, MailOutlined } from "@ant-design/icons";
+import React from 'react'
+import classNames from 'classnames'
+import FormItem from 'antd/lib/form/FormItem'
+import { Input, Button, Col } from 'antd'
+import { UserOutlined, KeyOutlined, MailOutlined } from '@ant-design/icons'
 
-import classes from "./RegisterForm.module.scss";
-import Link from "next/link";
+import classes from './RegisterForm.module.scss'
+import Link from 'next/link'
 
 const RegisterForm = ({
   errors,
@@ -26,7 +26,7 @@ const RegisterForm = ({
         <form onSubmit={handleSubmit} className="ant-form ant-form-vertical">
           <FormItem
             label="Имя пользователя"
-            validateStatus={touched.username && errors.username && "error"}
+            validateStatus={touched.username && errors.username && 'error'}
             help={touched.username && errors.username}
           >
             <Input
@@ -40,7 +40,7 @@ const RegisterForm = ({
           </FormItem>
           <FormItem
             label="E-Mail"
-            validateStatus={touched.email && errors.email && "error"}
+            validateStatus={touched.email && errors.email && 'error'}
             help={touched.email && errors.email}
           >
             <Input
@@ -56,8 +56,8 @@ const RegisterForm = ({
             label="Пароль"
             validateStatus={
               touched.password && errors.password
-                ? "error"
-                : values.password === values.password2 && "success"
+                ? 'error'
+                : values.password === values.password2 && 'success'
             }
             help={touched.password && errors.password}
           >
@@ -74,8 +74,8 @@ const RegisterForm = ({
             label="Повторите пароль"
             validateStatus={
               touched.password2 && errors.password2
-                ? "error"
-                : values.password === values.password2 && "success"
+                ? 'error'
+                : values.password === values.password2 && 'success'
             }
             help={touched.password2 && errors.password2}
           >
@@ -107,7 +107,7 @@ const RegisterForm = ({
         </div>
       </Col>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

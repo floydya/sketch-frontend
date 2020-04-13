@@ -1,6 +1,5 @@
-import Head from "next/head";
-import axios from "axios";
-import { Breadcrumb } from "../components";
+import Head from 'next/head'
+import { Breadcrumb } from '../components'
 
 const Home = ({ stars }) => (
   <div className="container">
@@ -8,7 +7,13 @@ const Home = ({ stars }) => (
       <title>Create Next App {stars}</title>
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <Breadcrumb items={[{name: "Test1", href: "/"}, {name: "Test2", href: "/index"}, {name: "Test3"}]} />
+    <Breadcrumb
+      items={[
+        { name: 'Test1', href: '/' },
+        { name: 'Test2', href: '/index' },
+        { name: 'Test3' },
+      ]}
+    />
     <main>
       <h1 className="title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
@@ -49,10 +54,10 @@ const Home = ({ stars }) => (
       </div>
     </main>
   </div>
-);
+)
 
 Home.getInitialProps = async () => {
-  return { stars: 3 };
-};
+  return { stars: 3 }
+}
 
-export default Home;
+export default Home

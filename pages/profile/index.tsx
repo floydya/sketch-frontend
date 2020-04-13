@@ -1,3 +1,3 @@
-import {default as Profile} from "./me";
+import { default as Profile } from './me'
 
-export default Profile;
+export default Profile

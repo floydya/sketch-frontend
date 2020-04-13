@@ -1,7 +1,7 @@
-import React from "react";
-import Head from "next/head";
-import { LoginForm } from "~/modules";
-import { privateRoute } from "~/core";
+import React from 'react'
+import Head from 'next/head'
+import { LoginForm } from '~/modules'
+import { privateRoute } from '~/core'
 
 const LoginPage = () => (
   <React.Fragment>
@@ -10,6 +10,6 @@ const LoginPage = () => (
     </Head>
     <LoginForm />
   </React.Fragment>
-);
+)
 
-export default privateRoute.withoutAuthentication(LoginPage);
+export default privateRoute.withoutAuthentication(LoginPage)

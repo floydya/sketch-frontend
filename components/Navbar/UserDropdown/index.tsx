@@ -1,16 +1,16 @@
-import React from "react";
-import Link from "next/link";
-import { Menu, Dropdown, Avatar } from "antd";
-import { DownOutlined } from "@ant-design/icons";
-import classes from "./UserDropdown.module.scss";
-import classNames from "classnames";
+import React from 'react'
+import Link from 'next/link'
+import { Menu, Dropdown, Avatar } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
+import classes from './UserDropdown.module.scss'
+import classNames from 'classnames'
 
 interface IUserDropdownProps {
   user: {
-    username: string;
-    avatar?: string;
-  };
-  logout: () => void;
+    username: string
+    avatar?: string
+  }
+  logout: () => void
 }
 
 const UserDropdown: React.FC<IUserDropdownProps> = ({ user, logout }) => {
@@ -34,18 +34,20 @@ const UserDropdown: React.FC<IUserDropdownProps> = ({ user, logout }) => {
           </Menu.Item>
         </Menu>
       }
-      trigger={["click"]}
+      trigger={['click']}
     >
       <a
-        className={classNames("ant-dropdown-link", classes.userMenuLink)}
+        className={classNames('ant-dropdown-link', classes.userMenuLink)}
         onClick={(e) => e.preventDefault()}
       >
-        <Avatar size="large" src={user.avatar}>{user.username.charAt(0).toUpperCase()}</Avatar>
+        <Avatar size="large" src={user.avatar}>
+          {user.username.charAt(0).toUpperCase()}
+        </Avatar>
         <span>{user.username}</span>
         <DownOutlined />
       </a>
     </Dropdown>
-  );
-};
+  )
+}
 
-export default UserDropdown;
+export default UserDropdown

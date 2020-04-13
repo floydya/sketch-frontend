@@ -1,1 +1,1 @@
-export { default as RegisterForm } from "./containers";
+export { default as RegisterForm } from './containers'
