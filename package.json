@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "prettier": "prettier --write **/*.ts*",
-    "lint:ts": "tslint 'src/**/*.{ts,tsx,js}'"
+    "start": "next start"
   },
   "dependencies": {
     "antd": "^4.1.2",
@@ -30,19 +28,7 @@
     "@types/react-dom": "^16.9.6",
     "@types/react-redux": "^7.1.7",
     "@types/yup": "^0.26.35",
-    "husky": "^4.2.5",
     "node-sass": "^4.13.1",
-    "prettier": "^2.0.4",
-    "tslint": "^6.1.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.3.0",
-    "tslint-react": "^4.2.0",
-    "tslint-react-hooks": "^2.2.2",
     "typescript": "^3.8.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint:ts"
-    }
   }
 }

@@ -1,18 +1,18 @@
-import React from 'react'
-import { useRouter } from 'next/router'
-import { axios } from '~/core'
+import React from "react";
+import { axios } from "~/core";
+import { NextPage, NextPageContext } from "next";
 
-const Profile = () => {
-  const {
-    query: { username },
-  } = useRouter()
-
-  return <div>{username}</div>
+interface IProps {
+  username: string | string[];
 }
 
-Profile.getInitialProps = async (ctx) => {
-  await axios.get(``)
-  return { username: ctx.query.username }
-}
+const Profile: NextPage<IProps> = ({ username }) => {
+  return <div>{username}</div>;
+};
 
-export default Profile
+Profile.getInitialProps = async (ctx: NextPageContext): Promise<IProps> => {
+  // await axios.get(``)
+  return { username: ctx.query.username };
+};
+
+export default Profile;
