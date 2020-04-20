@@ -1,11 +1,11 @@
-import React from 'react'
-import classNames from 'classnames'
-import FormItem from 'antd/lib/form/FormItem'
-import { Input, Button, Col } from 'antd'
-import { UserOutlined, KeyOutlined } from '@ant-design/icons'
+import React from "react";
+import classNames from "classnames";
+import FormItem from "antd/lib/form/FormItem";
+import { Input, Button, Col, Alert } from "antd";
+import { MailOutlined, KeyOutlined } from "@ant-design/icons";
 
-import classes from './LoginForm.module.scss'
-import Link from 'next/link'
+import classes from "./LoginForm.module.scss";
+import Link from "next/link";
 
 const LoginForm = ({
   errors,
@@ -24,22 +24,31 @@ const LoginForm = ({
           <p>Введите свои учетные данные для авторизации.</p>
         </section>
         <form onSubmit={handleSubmit} className="ant-form ant-form-horizontal">
+          {errors.detail && (
+            <Alert
+              style={{ marginBottom: "10px" }}
+              message={errors.detail}
+              type="error"
+              showIcon
+            />
+          )}
           <FormItem
-            validateStatus={touched.username && errors.username && 'error'}
-            help={touched.username && errors.username}
+            validateStatus={touched.email && errors.email && "error"}
+            help={touched.email && errors.email}
           >
             <Input
+              type="email"
               size="large"
-              placeholder="Имя пользователя"
-              prefix={<UserOutlined />}
-              name="username"
-              value={values.username}
+              placeholder="Email"
+              prefix={<MailOutlined />}
+              name="email"
+              value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />
           </FormItem>
           <FormItem
-            validateStatus={touched.password && errors.password && 'error'}
+            validateStatus={touched.password && errors.password && "error"}
             help={touched.password && errors.password}
           >
             <Input.Password
@@ -74,7 +83,7 @@ const LoginForm = ({
         </div>
       </Col>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

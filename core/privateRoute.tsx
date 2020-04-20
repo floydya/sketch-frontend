@@ -1,39 +1,39 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Router from 'next/router'
-import { IUserState } from '~/store/types/user'
-import { IStore } from '~/store'
+import React from "react";
+import { connect } from "react-redux";
+import Router from "next/router";
+import { IState as AuthenticationState } from "@floydya/authentication/src/store/types";
+import { IStore } from "~/store";
 
 interface IProps {
-  user: IUserState
+  authentication: AuthenticationState;
 }
 
 const mapStateToProps = (state: IStore) => ({
-  user: state.user,
-})
+  authentication: state.authentication,
+});
 
 export const withAuthentication = (Child: React.ComponentType) => {
-  const innerFC: React.FC<IProps> = ({ user, ...props }) => {
+  const innerFC: React.FC<IProps> = ({ authentication, ...props }) => {
     React.useEffect(() => {
-      if (!user.token) {
-        Router.push(`/login`)
+      if (!authentication.access) {
+        Router.push(`/login`);
       }
-    }, [user.token])
-    return <Child {...props} />
-  }
-  return connect(mapStateToProps)(innerFC)
-}
+    }, [authentication.access]);
+    return <Child {...props} />;
+  };
+  return connect(mapStateToProps)(innerFC);
+};
 
 export const withoutAuthentication = (Child: React.ComponentType) => {
-  const innerFC: React.FC<IProps> = ({ user, ...props }) => {
+  const innerFC: React.FC<IProps> = ({ authentication, ...props }) => {
     React.useEffect(() => {
-      if (user.token) {
-        Router.push(`/`)
+      if (authentication.access) {
+        Router.push(`/`);
       }
-    }, [user.token])
-    return <Child {...props} />
-  }
-  return connect(mapStateToProps)(innerFC)
-}
+    }, [authentication.access]);
+    return <Child {...props} />;
+  };
+  return connect(mapStateToProps)(innerFC);
+};
 
-export default { withAuthentication, withoutAuthentication }
+export default { withAuthentication, withoutAuthentication };

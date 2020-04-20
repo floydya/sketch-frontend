@@ -1,50 +1,77 @@
-import React, { useEffect } from 'react'
-import { Cookies } from 'react-cookie'
-import { Provider } from 'react-redux'
-import { Layout } from 'antd'
+import React from "react";
+import { Layout } from "antd";
+import withRedux from "next-redux-wrapper";
+import Navbar from "~/components/Navbar";
+import makeStore, { authenticationActions } from "~/store";
+import { parseCookies, destroyCookie, setCookie } from "nookies";
+import "antd/dist/antd.css";
+import "~/assets/styles/index.scss";
+import classes from "~/assets/styles/_app.module.scss";
+import { removeCookie } from "~/core";
+import { Provider } from "react-redux";
+import { basicActions, thunkActions } from "@floydya/authentication";
+import { Dispatch } from "@floydya/authentication/src/store/types";
 
-import Navbar from '~/components/Navbar'
-import store, { thunkDispatch } from '~/store'
-import { userActions } from '~/store/actions'
+const { Content, Footer } = Layout;
 
-import 'antd/dist/antd.css'
-import '~/assets/styles/index.scss'
-import classes from '~/assets/styles/_app.module.scss'
-
-const { Content, Footer } = Layout
-
-const cookies = new Cookies()
-
-const App = ({ Component, pageProps }) => {
-  useEffect(() => {
-    const token = cookies.get('token')
-    if (token) {
-      thunkDispatch(userActions.fetchUser())
-    }
-  }, [])
-
+const App = ({ Component, pageProps, store }) => {
   return (
     <Provider store={store}>
       <Layout>
         <Navbar />
-        <Content className={classes['ant-layout-content']}>
+        <Content className={classes["ant-layout-content"]}>
           <div id="breadcrumbs" className={classes.breadcrumbs} />
-          <Layout className={classes['ant-layout']}>
-            <Content className={classes['inner-layout']}>
+          <Layout className={classes["ant-layout"]}>
+            <Content className={classes["inner-layout"]}>
               <Component {...pageProps} />
             </Content>
           </Layout>
         </Content>
-        <Footer className={classes['ant-layout-footer']}>Footer</Footer>
+        <Footer className={classes["ant-layout-footer"]}>Footer</Footer>
       </Layout>
     </Provider>
-  )
-}
+  );
+};
 
-// App.getInitialProps = (ctx: { router: { route: string; }; }) => {
-//   return {
-//     currentRoute: ctx.router.route,
-//   };
-// };
+App.getInitialProps = async ({ Component, ctx }) => {
+  const cookies = parseCookies(ctx);
+  if (cookies.access) {
+    await ctx.store.dispatch(async (dispatch: Dispatch) => {
+      dispatch(
+        basicActions.setToken({
+          access: cookies.access,
+          refresh: cookies.refresh,
+        })
+      );
+      return await dispatch(authenticationActions.verify(cookies.access))
+        .then(
+          () => cookies.access,
+          async () =>
+            await dispatch(authenticationActions.refresh(cookies.refresh))
+        )
+        .then(
+          async () =>
+            await dispatch(authenticationActions.fetchUser()).then(() => {
+              setCookie(
+                ctx,
+                "access",
+                ctx.store.getState().authentication.access,
+                {
+                  maxAge: 30 * 24 * 60 * 60,
+                  path: "/",
+                }
+              );
+            }),
+          () => {
+            destroyCookie(ctx, "access");
+            destroyCookie(ctx, "refresh");
+          }
+        );
+    });
+  }
+  return {
+    store: ctx.store,
+  };
+};
 
-export default App
+export default withRedux(makeStore)(App);

@@ -1,51 +1,61 @@
-import React from 'react'
-import Link from 'next/link'
-import { Layout } from 'antd'
-import { connect } from 'react-redux'
-import classes from './Navbar.module.scss'
-import { IStore } from '~/store'
-import { userActions } from '~/store/actions'
-import { IUserState } from '~/store/types/user'
-import UserDropdown from './UserDropdown'
-import classNames from 'classnames'
+import React from "react";
+import Link from "next/link";
+import { Layout } from "antd";
+import { connect } from "react-redux";
+import classes from "./Navbar.module.scss";
+import { IStore } from "~/store";
+import {
+  IState as AuthenticationState,
+  Dispatch,
+} from "@floydya/authentication/store/types";
+import UserDropdown from "./UserDropdown";
+import classNames from "classnames";
+import { thunkActions } from "@floydya/authentication";
+import { destroyCookie } from "nookies";
 
-const { Header } = Layout
+const { Header } = Layout;
 
 interface INavbar {
-  user: IUserState
-  logoutUser: () => void
+  authentication: AuthenticationState;
+  logoutUser: () => void;
 }
 
-const Navbar: React.FC<INavbar> = ({ user, logoutUser }) => {
+const Navbar: React.FC<INavbar> = ({ authentication, logoutUser }) => {
   return (
-    <Header className={classNames(classes.header, 'ant-menu', 'ant-menu-dark')}>
+    <Header className={classNames(classes.header, "ant-menu", "ant-menu-dark")}>
       <Link href="/">
         <a>
           <div className={classes.logo} />
         </a>
       </Link>
       <div className={classes.navbarSpace} />
-      {user.user ? (
-        <UserDropdown user={user.user} logout={logoutUser} />
+      {authentication.user ? (
+        <UserDropdown user={authentication.user} logout={logoutUser} />
       ) : (
         <React.Fragment>
           <Link href="/login">
             <a className="ant-menu-item">Вход</a>
           </Link>
           <Link href="/register">
-            <a className={classNames('ant-menu-item', classes.registerButton)}>
+            <a className={classNames("ant-menu-item", classes.registerButton)}>
               Регистрация
             </a>
           </Link>
         </React.Fragment>
       )}
     </Header>
-  )
-}
+  );
+};
 
 export default connect(
   (state: IStore) => ({
-    user: state.user,
+    authentication: state.authentication,
   }),
-  (dispatch) => ({ logoutUser: () => dispatch(userActions.removeToken()) })
-)(Navbar)
+  (dispatch: Dispatch) => ({
+    logoutUser: () => {
+      destroyCookie(null, "access");
+      destroyCookie(null, "refresh");
+      dispatch(thunkActions.logout());
+    },
+  })
+)(Navbar);
