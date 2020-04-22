@@ -1,12 +1,13 @@
 import { default as RegisterForm } from '../components/RegisterForm'
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
+import { axios } from '~/core'
+import Router from 'next/router'
 
 const registerSchema = Yup.object().shape({
-  username: Yup.string().required(),
   email: Yup.string().email().required(),
   password: Yup.string().required().min(6),
-  password2: Yup.string()
+  re_password: Yup.string()
     .required()
     .min(6)
     .test('password-match', "Password doesn't matches", function (value) {
@@ -18,16 +19,20 @@ const registerSchema = Yup.object().shape({
 type Values = Yup.InferType<typeof registerSchema>
 
 const initialValues: Values = {
-  username: '',
   email: '',
   password: '',
-  password2: '',
+  re_password: '',
 }
 
 export default withFormik({
   mapPropsToValues: () => initialValues,
   handleSubmit: async (values, form) => {
-    console.log(values)
+    try {
+      await axios.post(`/auth/users/`, values)
+      await Router.replace(`/auth/register/success`, `/auth/register`)
+    } catch (error) {
+      form.setErrors(error.response.data)
+    }
     form.setSubmitting(false)
   },
   validationSchema: registerSchema,

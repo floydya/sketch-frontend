@@ -7,9 +7,8 @@ import { parseCookies, destroyCookie, setCookie } from "nookies";
 import "antd/dist/antd.css";
 import "~/assets/styles/index.scss";
 import classes from "~/assets/styles/_app.module.scss";
-import { removeCookie } from "~/core";
 import { Provider } from "react-redux";
-import { basicActions, thunkActions } from "@floydya/authentication";
+import { basicActions } from "@floydya/authentication";
 import { Dispatch } from "@floydya/authentication/src/store/types";
 
 const { Content, Footer } = Layout;
@@ -71,6 +70,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
   }
   return {
     store: ctx.store,
+    ...(Component.getInitialProps ? Component.getInitialProps(ctx) : {})
   };
 };
 

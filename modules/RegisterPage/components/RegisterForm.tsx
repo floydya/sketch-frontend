@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import FormItem from 'antd/lib/form/FormItem'
-import { Input, Button, Col } from 'antd'
-import { UserOutlined, KeyOutlined, MailOutlined } from '@ant-design/icons'
+import { Input, Button, Col, Alert } from 'antd'
+import { KeyOutlined, MailOutlined } from '@ant-design/icons'
 
 import classes from './RegisterForm.module.scss'
 import Link from 'next/link'
@@ -24,20 +24,14 @@ const RegisterForm = ({
           <p>Заполните поля ниже для регистрации.</p>
         </section>
         <form onSubmit={handleSubmit} className="ant-form ant-form-vertical">
-          <FormItem
-            label="Имя пользователя"
-            validateStatus={touched.username && errors.username && 'error'}
-            help={touched.username && errors.username}
-          >
-            <Input
-              size="large"
-              prefix={<UserOutlined />}
-              name="username"
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
+        {errors.detail && (
+            <Alert
+              style={{ marginBottom: "10px" }}
+              message={errors.detail}
+              type="error"
+              showIcon
             />
-          </FormItem>
+          )}
           <FormItem
             label="E-Mail"
             validateStatus={touched.email && errors.email && 'error'}
@@ -73,17 +67,17 @@ const RegisterForm = ({
           <FormItem
             label="Повторите пароль"
             validateStatus={
-              touched.password2 && errors.password2
+              touched.re_password && errors.re_password
                 ? 'error'
-                : values.password === values.password2 && 'success'
+                : values.re_password === values.re_password && 'success'
             }
-            help={touched.password2 && errors.password2}
+            help={touched.re_password && errors.re_password}
           >
             <Input.Password
               size="large"
               prefix={<KeyOutlined />}
-              name="password2"
-              value={values.password2}
+              name="re_password"
+              value={values.re_password}
               onChange={handleChange}
               onBlur={handleBlur}
             />
@@ -101,7 +95,7 @@ const RegisterForm = ({
           </FormItem>
         </form>
         <div className={classes.center}>
-          <Link href="/login">
+          <Link href="/auth/login">
             <a>Авторизация</a>
           </Link>
         </div>

@@ -74,10 +74,10 @@ const LoginForm = ({
           </FormItem>
         </form>
         <div className={classes.links}>
-          <Link href="/register">
+          <Link href="/auth/register">
             <a>Зарегистрироваться</a>
           </Link>
-          <Link href="/forgot-password">
+          <Link href="/auth/forgot-password">
             <a>Забыли пароль?</a>
           </Link>
         </div>

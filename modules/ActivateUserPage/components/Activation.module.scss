@@ -1,0 +1,18 @@
+.activation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.activation__header {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.activation__button {
+    margin-top: 15px;
+}

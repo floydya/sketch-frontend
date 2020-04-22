@@ -33,10 +33,10 @@ const Navbar: React.FC<INavbar> = ({ authentication, logoutUser }) => {
         <UserDropdown user={authentication.user} logout={logoutUser} />
       ) : (
         <React.Fragment>
-          <Link href="/login">
+          <Link href="/auth/login">
             <a className="ant-menu-item">Вход</a>
           </Link>
-          <Link href="/register">
+          <Link href="/auth/register">
             <a className={classNames("ant-menu-item", classes.registerButton)}>
               Регистрация
             </a>
@@ -53,8 +53,8 @@ export default connect(
   }),
   (dispatch: Dispatch) => ({
     logoutUser: () => {
-      destroyCookie(null, "access");
-      destroyCookie(null, "refresh");
+      destroyCookie(null, "access", {path: "/",});
+      destroyCookie(null, "refresh", {path: "/",});
       dispatch(thunkActions.logout());
     },
   })
