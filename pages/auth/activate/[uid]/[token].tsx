@@ -1,8 +1,17 @@
 import React from "react";
-import { ActivateUserContainer } from "~/modules/ActivateUserPage";
+import Head from "next/head";
+import { ActivateUserContainer } from "~/modules";
+import { pageAccess } from "~/core";
 
 const ActivateUserPage = () => {
-  return <ActivateUserContainer />;
+  return (
+    <React.Fragment>
+      <Head>
+        <title>Активация пользователя</title>
+      </Head>
+      <ActivateUserContainer />
+    </React.Fragment>
+  );
 };
 
-export default ActivateUserPage;
+export default pageAccess.guestRoute(ActivateUserPage);

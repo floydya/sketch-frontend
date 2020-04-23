@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import { RegisterForm } from '~/modules'
-import { privateRoute } from '~/core'
+import { pageAccess } from '~/core'
 
 const RegisterPage = () => (
   <React.Fragment>
@@ -12,4 +12,4 @@ const RegisterPage = () => (
   </React.Fragment>
 )
 
-export default privateRoute.withoutAuthentication(RegisterPage)
+export default pageAccess.guestRoute(RegisterPage)

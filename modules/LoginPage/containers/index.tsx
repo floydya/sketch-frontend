@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { authenticationActions } from "~/store";
 import { connect } from "react-redux";
 import { setCookie } from "nookies";
+import Router from "next/router";
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required(),
@@ -19,13 +20,19 @@ const initialValues: LoginFormValues = {
 
 const mapDispatchToProps = (dispatch) => ({
   login: (data) => dispatch(authenticationActions.login(data)),
+  fetchUser: () => dispatch(authenticationActions.fetchUser()),
 });
+
+interface IProps {
+  login: (data: any) => Promise<any>;
+  fetchUser: () => any;
+}
 
 export default connect(
   null,
   mapDispatchToProps
 )(
-  withFormik<{ login: (d: any) => Promise<any> }, LoginFormValues>({
+  withFormik<IProps, LoginFormValues>({
     mapPropsToValues: () => initialValues,
     handleSubmit: async (values, form) => {
       const formData = { email: values.email, password: values.password };
@@ -42,6 +49,8 @@ export default connect(
           maxAge: 30 * 24 * 60 * 60,
           path: "/",
         });
+        await form.props.fetchUser();
+        await Router.push(`/`);
       } catch (errors) {
         form.setErrors(errors.response.data);
       }

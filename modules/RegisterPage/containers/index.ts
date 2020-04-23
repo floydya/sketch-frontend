@@ -29,7 +29,7 @@ export default withFormik({
   handleSubmit: async (values, form) => {
     try {
       await axios.post(`/auth/users/`, values)
-      await Router.replace(`/auth/register/success`, `/auth/register`)
+      await Router.replace(`/auth/register/success?${values.email}`, `/auth/register`)
     } catch (error) {
       form.setErrors(error.response.data)
     }

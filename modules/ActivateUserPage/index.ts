@@ -1,1 +1,1 @@
-export { default as ActivateUserContainer } from "./containers/ActivateUserPage";
+export { default as ActivateUserContainer } from "./containers/ActivateUserContainer";

@@ -77,7 +77,7 @@ const LoginForm = ({
           <Link href="/auth/register">
             <a>Зарегистрироваться</a>
           </Link>
-          <Link href="/auth/forgot-password">
+          <Link href="/auth/password-reset">
             <a>Забыли пароль?</a>
           </Link>
         </div>

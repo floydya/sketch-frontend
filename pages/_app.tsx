@@ -68,10 +68,8 @@ App.getInitialProps = async ({ Component, ctx }) => {
         );
     });
   }
-  return {
-    store: ctx.store,
-    ...(Component.getInitialProps ? Component.getInitialProps(ctx) : {})
-  };
+  if (Component.getInitialProps) return await Component.getInitialProps(ctx);
+  return { store: ctx.store };
 };
 
 export default withRedux(makeStore)(App);
