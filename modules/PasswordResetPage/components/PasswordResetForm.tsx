@@ -4,6 +4,7 @@ import FormItem from "antd/lib/form/FormItem";
 import { MailOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import classes from "./PasswordResetForm.module.scss";
+import { Form } from "~/components";
 
 const PasswordResetForm = ({
   errors,
@@ -21,38 +22,14 @@ const PasswordResetForm = ({
         <p>Введите почтовый адрес, на который вы регистрировались.</p>
         <p>Туда будет отправлено письмо с ссылкой на изменение пароля.</p>
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className={classNames(
-          classes.w100,
-          "ant-col-md-6",
-          "ant-form",
-          "ant-form-horizontal"
-        )}
-      >
-        {errors.detail && (
-          <Alert
-            style={{ marginBottom: "10px" }}
-            message={errors.detail}
-            type="error"
-            showIcon
-          />
-        )}
-        <FormItem
-          validateStatus={touched.email && errors.email && "error"}
-          help={touched.email && errors.email}
-        >
-          <Input
-            type="email"
-            size="large"
-            placeholder="Email"
-            prefix={<MailOutlined />}
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </FormItem>
+      <Form type="horizontal">
+        <Form.Fields.Input
+          type="email"
+          size="large"
+          placeholder="Email"
+          prefix={<MailOutlined />}
+          name="email"
+        />
         <FormItem>
           <Button
             className={classes.w100}
@@ -64,7 +41,7 @@ const PasswordResetForm = ({
             Отправить письмо
           </Button>
         </FormItem>
-      </form>
+      </Form>
     </section>
   );
 };

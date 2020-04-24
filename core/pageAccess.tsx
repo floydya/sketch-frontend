@@ -1,7 +1,7 @@
 import { NextPageContext } from "next";
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Router from "next/router";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { IStore } from "~/store";
 
 export type AuthProps = {
@@ -18,33 +18,32 @@ const mapStateToProps = (state: IStore) => ({
 });
 
 export function privateRoute(WrappedComponent: any) {
-  return connect(mapStateToProps)(
-    class extends Component<AuthProps> {
-      static async getInitialProps(ctx: NextPageContext) {
-        const token = ctx.store.getState().authentication.access;
-        if (!token) {
-          if (ctx.res) {
-            ctx.res.writeHead(302, { Location: redirect.private });
-            ctx.res.end();
-          } else {
-            Router.push(redirect.private);
-          }
-        }
-        if (WrappedComponent.getInitialProps) {
-          return await WrappedComponent.getInitialProps(ctx);
-        }
-        return ctx;
+  const _wrappedComponent = (props: AuthProps) => {
+    const token = useSelector((state: IStore) => state.authentication.access);
+    useEffect(() => {
+      if (!token) {
+        Router.push(redirect.private);
       }
+    }, [token]);
+    return <WrappedComponent {...props} />;
+  };
 
-      componentDidUpdate(): void {
-        if (!this.props.token) Router.push(redirect.private);
-      }
-
-      render() {
-        return <WrappedComponent {...this.props} />;
+  _wrappedComponent.getInitialProps = async (ctx: NextPageContext) => {
+    const token = ctx.store.getState().authentication.access;
+    if (!token) {
+      if (ctx.res) {
+        ctx.res.writeHead(302, { Location: redirect.private });
+        ctx.res.end();
+      } else {
+        Router.push(redirect.private);
       }
     }
-  );
+    if (WrappedComponent.getInitialProps) {
+      return await WrappedComponent.getInitialProps(ctx);
+    }
+    return {};
+  };
+  return _wrappedComponent;
 }
 
 export function guestRoute(WrappedComponent: any) {
@@ -64,7 +63,7 @@ export function guestRoute(WrappedComponent: any) {
         if (WrappedComponent.getInitialProps) {
           return await WrappedComponent.getInitialProps(ctx);
         }
-        return ctx;
+        return {};
       }
 
       render() {

@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { axios } from "~/core";
 import { IStore } from "~/store";
 import { connect } from "react-redux";
-import { PasswordSetForm } from "../components";
+import { EmailChangeForm } from "../components";
 import { message } from "antd";
 import { thunkActions } from "@floydya/authentication";
 import { Dispatch } from "@floydya/authentication/store/types";
@@ -11,13 +11,12 @@ import { destroyCookie } from "nookies";
 
 const validationSchema = Yup.object().shape({
   current_password: Yup.string().required(),
-  new_password: Yup.string().required().min(6),
-  re_new_password: Yup.string()
+  new_email: Yup.string().email().required(),
+  re_new_email: Yup.string().email()
     .required()
-    .min(6)
-    .test("password-match", "Password doesn't matches", function (value) {
-      const { new_password } = this.parent;
-      return new_password === value;
+    .test("email-match", "Emails doesn't matches", function (value) {
+      const { new_email } = this.parent;
+      return new_email === value;
     }),
 });
 
@@ -25,8 +24,8 @@ type Values = Yup.InferType<typeof validationSchema>;
 
 const initialValues: Values = {
   current_password: "",
-  new_password: "",
-  re_new_password: "",
+  new_email: "",
+  re_new_email: "",
 };
 
 interface IProps {
@@ -50,16 +49,16 @@ export default connect(
     mapPropsToValues: () => initialValues,
     handleSubmit: async (values, form) => {
       try {
-        await axios.post(`/auth/users/set_password/`, values, {
+        await axios.post(`/auth/users/set_email/`, values, {
           headers: { Authorization: `JWT ${form.props.token}` },
         });
         form.resetForm();
-        await message.success("Пароль успешно изменен!");
+        await message.success("Почтовый адрес успешно изменен!");
         form.props.logout();
       } catch (error) {
         form.setErrors(error.response.data);
       }
       form.setSubmitting(false);
     },
-  })(PasswordSetForm)
+  })(EmailChangeForm)
 );

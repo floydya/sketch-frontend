@@ -8,8 +8,9 @@
     "start": "next start"
   },
   "dependencies": {
-    "@floydya/authentication": "^1.1.3",
+    "@floydya/authentication": "^1.1.5",
     "antd": "^4.1.4",
+    "antd-mask-input": "^0.1.13",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.5",

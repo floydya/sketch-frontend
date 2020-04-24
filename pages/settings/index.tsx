@@ -2,21 +2,20 @@ import React from "react";
 import { Tabs } from "antd";
 import { UserOutlined, BellOutlined, SettingOutlined } from "@ant-design/icons";
 import { pageAccess } from "~/core";
-import ProfileComponent from "~/modules/SettingsPage/components/Profile";
+import { ProfileSettings, SettingsContainer } from "~/modules";
 import { NextPageContext } from "next";
 
 const settingsTabs = [
   {
     Icon: UserOutlined,
     name: "Персональные данные",
-    Component: ProfileComponent,
+    Component: ProfileSettings,
   },
-  { Icon: SettingOutlined, name: "Настройки", Component: () => null },
+  { Icon: SettingOutlined, name: "Настройки", Component: SettingsContainer },
   { Icon: BellOutlined, name: "Уведомления", Component: () => null },
 ];
 
 const SettingsPage = (props) => {
-  console.log(props);
   return (
     <div>
       <Tabs defaultActiveKey="0" tabPosition="left">

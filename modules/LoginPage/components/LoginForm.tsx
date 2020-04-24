@@ -6,6 +6,7 @@ import { MailOutlined, KeyOutlined } from "@ant-design/icons";
 
 import classes from "./LoginForm.module.scss";
 import Link from "next/link";
+import { Form } from "~/components";
 
 const LoginForm = ({
   errors,
@@ -23,44 +24,20 @@ const LoginForm = ({
           <h2>Авторизация</h2>
           <p>Введите свои учетные данные для авторизации.</p>
         </section>
-        <form onSubmit={handleSubmit} className="ant-form ant-form-horizontal">
-          {errors.detail && (
-            <Alert
-              style={{ marginBottom: "10px" }}
-              message={errors.detail}
-              type="error"
-              showIcon
-            />
-          )}
-          <FormItem
-            validateStatus={touched.email && errors.email && "error"}
-            help={touched.email && errors.email}
-          >
-            <Input
-              type="email"
-              size="large"
-              placeholder="Email"
-              prefix={<MailOutlined />}
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </FormItem>
-          <FormItem
-            validateStatus={touched.password && errors.password && "error"}
-            help={touched.password && errors.password}
-          >
-            <Input.Password
-              size="large"
-              placeholder="Пароль..."
-              prefix={<KeyOutlined />}
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </FormItem>
+        <Form type="horizontal">
+          <Form.Fields.Input
+            type="email"
+            size="large"
+            placeholder="Email"
+            prefix={<MailOutlined />}
+            name="email"
+          />
+          <Form.Fields.Password
+            size="large"
+            placeholder="Пароль"
+            prefix={<KeyOutlined />}
+            name="password"
+          />
           <FormItem>
             <Button
               className={classes.w100}
@@ -72,7 +49,7 @@ const LoginForm = ({
               Автозироваться
             </Button>
           </FormItem>
-        </form>
+        </Form>
         <div className={classes.links}>
           <Link href="/auth/register">
             <a>Зарегистрироваться</a>
