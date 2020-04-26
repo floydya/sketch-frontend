@@ -1,20 +1,12 @@
 import React from "react";
-import { Alert, Input, Button } from "antd";
+import { Button } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { MailOutlined } from "@ant-design/icons";
 import classNames from "classnames";
-import classes from "./PasswordResetForm.module.scss";
+import classes from "./PasswordResetForm.module.less";
 import { Form } from "~/components";
 
-const PasswordResetForm = ({
-  errors,
-  handleSubmit,
-  values,
-  touched,
-  handleChange,
-  handleBlur,
-  isSubmitting,
-}) => {
+const PasswordResetForm = ({ isSubmitting }) => {
   return (
     <section className={classNames("ant-row", classes.container)}>
       <div className={classes.header}>

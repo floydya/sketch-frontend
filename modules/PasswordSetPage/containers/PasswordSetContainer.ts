@@ -32,6 +32,7 @@ const initialValues: Values = {
 interface IProps {
   token: string;
   logout: () => void;
+  onClose?: () => void;
 }
 
 export default connect(
@@ -60,6 +61,7 @@ export default connect(
         form.setErrors(error.response.data);
       }
       form.setSubmitting(false);
+      if (form.props.onClose) form.props.onClose()
     },
   })(PasswordSetForm)
 );

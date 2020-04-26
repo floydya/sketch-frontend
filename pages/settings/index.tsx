@@ -1,44 +1,41 @@
 import React from "react";
-import { Tabs } from "antd";
-import { UserOutlined, BellOutlined, SettingOutlined } from "@ant-design/icons";
+import { Menu } from "antd";
 import { pageAccess } from "~/core";
 import { ProfileSettings, SettingsContainer } from "~/modules";
-import { NextPageContext } from "next";
 
 const settingsTabs = [
   {
-    Icon: UserOutlined,
     name: "Персональные данные",
     Component: ProfileSettings,
   },
-  { Icon: SettingOutlined, name: "Настройки", Component: SettingsContainer },
-  { Icon: BellOutlined, name: "Уведомления", Component: () => null },
+  { name: "Настройки", Component: () => null },
+  { name: "Уведомления", Component: () => null },
+  { name: "Настройки безопасности", Component: SettingsContainer },
 ];
 
-const SettingsPage = (props) => {
+const SettingsPage = () => {
+  const [selectedPage, setSelectedPage] = React.useState<string>("0");
+  const setPage = React.useCallback(({ key }) => setSelectedPage(key), []);
+  const Component = React.useMemo(() => settingsTabs[selectedPage].Component, [
+    selectedPage,
+  ]);
   return (
-    <div>
-      <Tabs defaultActiveKey="0" tabPosition="left">
-        {settingsTabs.map(({ Icon, name, Component }, index) => (
-          <Tabs.TabPane
-            key={index.toString()}
-            tab={
-              <span>
-                <Icon /> {name}
-              </span>
-            }
-          >
-            <Component />
-          </Tabs.TabPane>
+    <div style={{ display: "flex", width: "100%", height: "100%" }}>
+      <Menu
+        style={{ width: 256 }}
+        onClick={setPage}
+        mode="inline"
+        selectedKeys={[selectedPage]}
+      >
+        {settingsTabs.map(({ name }, index) => (
+          <Menu.Item key={index.toString()}>{name}</Menu.Item>
         ))}
-      </Tabs>
+      </Menu>
+      <div style={{ flex: "1 1", padding: "25px" }}>
+        <Component />
+      </div>
     </div>
   );
-};
-
-SettingsPage.getInitialProps = async (ctx: NextPageContext) => {
-  const user = ctx.store.getState().authentication.user;
-  return { user };
 };
 
 export default pageAccess.privateRoute(SettingsPage);

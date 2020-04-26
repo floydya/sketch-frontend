@@ -12,7 +12,8 @@ import { destroyCookie } from "nookies";
 const validationSchema = Yup.object().shape({
   current_password: Yup.string().required(),
   new_email: Yup.string().email().required(),
-  re_new_email: Yup.string().email()
+  re_new_email: Yup.string()
+    .email()
     .required()
     .test("email-match", "Emails doesn't matches", function (value) {
       const { new_email } = this.parent;
@@ -31,6 +32,7 @@ const initialValues: Values = {
 interface IProps {
   token: string;
   logout: () => void;
+  onClose?: () => void;
 }
 
 export default connect(
@@ -59,6 +61,7 @@ export default connect(
         form.setErrors(error.response.data);
       }
       form.setSubmitting(false);
+      if (form.props.onClose) form.props.onClose();
     },
   })(EmailChangeForm)
 );

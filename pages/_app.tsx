@@ -1,18 +1,19 @@
 import React from "react";
+import { default as NextApp } from "next/app";
 import { Layout } from "antd";
 import withRedux from "next-redux-wrapper";
 import Navbar from "~/components/Navbar";
-import makeStore, { authenticationActions, IStore } from "~/store";
+import makeStore, { authenticationActions } from "~/store";
 import { parseCookies, destroyCookie, setCookie } from "nookies";
-import "antd/dist/antd.css";
-import "~/assets/styles/index.scss";
-import classes from "~/assets/styles/_app.module.scss";
+
+import "~/assets/styles/theme.less";
+import classes from "~/assets/styles/_app.module.less";
+
 import { Provider } from "react-redux";
 import { basicActions, thunkActions } from "@floydya/authentication";
 import { Dispatch } from "@floydya/authentication/src/store/types";
 import jwt_decode from "jwt-decode";
 import { NextPageContext } from "next";
-import { ThunkDispatch } from "redux-thunk";
 
 const { Content, Footer } = Layout;
 
@@ -21,15 +22,15 @@ const App = ({ Component, pageProps, store }) => {
     <Provider store={store}>
       <Layout>
         <Navbar />
-        <Content className={classes["ant-layout-content"]}>
-          <div id="breadcrumbs" className={classes.breadcrumbs} />
-          <Layout className={classes["ant-layout"]}>
+        <Content className={classes["custom-layout-content"]}>
+          <div id="breadcrumbs" className={classes["breadcrumbs"]} />
+          <Layout className={classes["custom-layout"]}>
             <Content className={classes["inner-layout"]}>
               <Component {...pageProps} />
             </Content>
           </Layout>
         </Content>
-        <Footer className={classes["ant-layout-footer"]}>Footer</Footer>
+        <Footer className={classes["custom-layout-footer"]}>Footer</Footer>
       </Layout>
     </Provider>
   );
@@ -69,10 +70,17 @@ App.getInitialProps = async ({ Component, ctx }) => {
           )
         );
       } else {
-        console.log("2 refresh");
         await ctx.store.dispatch((dispatch: Dispatch) =>
-          dispatch(authenticationActions.refresh()).then(
-            () => dispatch(authenticationActions.fetchUser()),
+          dispatch(authenticationActions.refresh(cookies.refresh)).then(
+            async () => {
+              await dispatch(authenticationActions.fetchUser());
+              setCookie(
+                ctx,
+                "access",
+                ctx.store.getState().authentication.access,
+                { path: "/", maxAge: 30 * 24 * 60 * 60 }
+              );
+            },
             () => {
               logoutCookie(ctx);
               dispatch(thunkActions.logout());
@@ -88,13 +96,15 @@ App.getInitialProps = async ({ Component, ctx }) => {
       );
     }
   } catch (error) {
+    console.log(error);
     logoutCookie(ctx);
     await ctx.store.dispatch((dispatch: Dispatch) =>
       dispatch(thunkActions.logout())
     );
   }
-  if (Component.getInitialProps) return await Component.getInitialProps(ctx);
-  return { store: ctx.store };
+  if (Component.getInitialProps)
+    return { pageProps: await Component.getInitialProps(ctx) };
+  return { pageProps: await NextApp.getInitialProps(ctx) };
 };
 
 export default withRedux(makeStore)(App);

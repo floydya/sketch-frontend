@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Menu, Dropdown, Avatar } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import classes from "./UserDropdown.module.scss";
+import classes from "./UserDropdown.module.less";
 import classNames from "classnames";
 
 interface IUserDropdownProps {

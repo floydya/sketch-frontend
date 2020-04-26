@@ -4,10 +4,10 @@ import { Button } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { KeyOutlined } from "@ant-design/icons";
 
-import classes from "./PasswordSetForm.module.scss";
+import classes from "./PasswordSetForm.module.less";
 import { Form } from "~/components";
 
-const PasswordSetForm = ({ values, isSubmitting }) => (
+const PasswordSetForm: React.FC<any> = ({ values, isSubmitting, onClose }) => (
   <section className={classNames(classes.container, "ant-row")}>
     <div className={classes.header}>
       <h2>Изменение пароля</h2>
@@ -37,15 +37,27 @@ const PasswordSetForm = ({ values, isSubmitting }) => (
         name="re_new_password"
       />
       <FormItem>
-        <Button
-          className={classes.w100}
-          size="large"
-          type="primary"
-          htmlType="submit"
-          loading={isSubmitting}
-        >
-          Изменить пароль
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            loading={isSubmitting}
+          >
+            Изменить пароль
+          </Button>
+          {onClose && (
+            <Button
+              size="large"
+              type="default"
+              htmlType="button"
+              disabled={isSubmitting}
+              onClick={onClose}
+            >
+              Отменить
+            </Button>
+          )}
+        </div>
       </FormItem>
     </Form>
   </section>

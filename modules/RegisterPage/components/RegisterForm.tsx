@@ -4,7 +4,7 @@ import FormItem from "antd/lib/form/FormItem";
 import { Button, Col } from "antd";
 import { KeyOutlined, MailOutlined } from "@ant-design/icons";
 
-import classes from "./RegisterForm.module.scss";
+import classes from "./RegisterForm.module.less";
 import Link from "next/link";
 import { Form } from "~/components";
 

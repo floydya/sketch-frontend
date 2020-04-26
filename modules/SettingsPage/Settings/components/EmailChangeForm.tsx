@@ -4,10 +4,10 @@ import { Button } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { KeyOutlined, MailOutlined } from "@ant-design/icons";
 
-import classes from "./EmailChangeForm.module.scss";
+import classes from "./EmailChangeForm.module.less";
 import { Form } from "~/components";
 
-const EmailChangeForm = ({ isSubmitting }) => (
+const EmailChangeForm: React.FC<any> = ({ isSubmitting, onClose }) => (
   <section className={classNames(classes.container, "ant-row")}>
     <div className={classes.header}>
       <h2>Изменение почтового адреса</h2>
@@ -31,21 +31,33 @@ const EmailChangeForm = ({ isSubmitting }) => (
         name="re_new_email"
       />
       <Form.Fields.Password
-          size="large"
-          placeholder="Текущий пароль"
-          prefix={<KeyOutlined />}
-          name="current_password"
-        />
+        size="large"
+        placeholder="Текущий пароль"
+        prefix={<KeyOutlined />}
+        name="current_password"
+      />
       <FormItem>
-        <Button
-          className={classes.w100}
-          size="large"
-          type="primary"
-          htmlType="submit"
-          loading={isSubmitting}
-        >
-          Изменить почту
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            loading={isSubmitting}
+          >
+            Изменить почту
+          </Button>
+          {onClose && (
+            <Button
+              size="large"
+              type="default"
+              htmlType="button"
+              disabled={isSubmitting}
+              onClick={onClose}
+            >
+              Отменить
+            </Button>
+          )}
+        </div>
       </FormItem>
     </Form>
   </section>

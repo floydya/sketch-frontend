@@ -1,13 +1,14 @@
 import React from "react";
-import { Upload, message } from "antd";
+import { Upload, message, Avatar, Button } from "antd";
 import { connect } from "react-redux";
 import { authenticationActions, IStore } from "~/store";
 import { ThunkDispatch } from "redux-thunk";
 import { ActionType } from "@floydya/authentication/store/types";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { axios, base64encode } from "~/core";
 
-import classes from "./AvatarUpload.module.scss";
+import classes from "./AvatarUpload.module.less";
+import FormItem from "antd/lib/form/FormItem";
 
 function beforeUpload(file) {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -29,6 +30,7 @@ const AvatarUpload = ({ user, fetchUser, token }) => {
         setIsLoading(true);
       }
       if (info.file.status === "done") {
+        setIsLoading(false);
         fetchUser();
       }
     },
@@ -44,24 +46,24 @@ const AvatarUpload = ({ user, fetchUser, token }) => {
     return avatar;
   }, []);
   return (
-    <Upload
-      name="avatar"
-      listType="picture-card"
-      className={classes.avatar}
-      showUploadList={false}
-      action={handleUpload}
-      beforeUpload={beforeUpload}
-      onChange={handleChange}
-    >
-      {user?.avatar ? (
-        <img src={user.avatar} alt="avatar" style={{ width: "100%" }} />
-      ) : (
-        <div>
-          {isLoading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div className="ant-upload-text">Upload</div>
-        </div>
-      )}
-    </Upload>
+    <FormItem label="Аватар" style={{ marginLeft: "48px" }}>
+      <div className={classes.avatarContainer}>
+        <Avatar size={144} src={user?.avatar} className={classes.avatar}>
+          {user?.email?.charAt(0)}
+        </Avatar>
+        <Upload
+          name="avatar"
+          showUploadList={false}
+          action={handleUpload}
+          beforeUpload={beforeUpload}
+          onChange={handleChange}
+        >
+          <Button loading={isLoading} icon={<UploadOutlined />}>
+            Загрузить
+          </Button>
+        </Upload>
+      </div>
+    </FormItem>
   );
 };
 

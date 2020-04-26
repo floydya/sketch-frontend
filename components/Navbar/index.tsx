@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Layout } from "antd";
 import { connect } from "react-redux";
-import classes from "./Navbar.module.scss";
+import classes from "./Navbar.module.less";
 import { IStore } from "~/store";
 import {
   IState as AuthenticationState,
@@ -22,7 +22,7 @@ interface INavbar {
 
 const Navbar: React.FC<INavbar> = ({ authentication, logoutUser }) => {
   return (
-    <Header className={classNames(classes.header, "ant-menu", "ant-menu-dark")}>
+    <Header className={classNames("ant-menu", "ant-menu-dark", classes.header)}>
       <Link href="/">
         <a>
           <div className={classes.logo} />

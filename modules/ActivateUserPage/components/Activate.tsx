@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from "./Activation.module.scss";
+import classes from "./Activation.module.less";
 import { Button } from "antd";
 
 interface IProps {

@@ -1,22 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 import FormItem from "antd/lib/form/FormItem";
-import { Input, Button, Col, Alert } from "antd";
+import { Button, Col } from "antd";
 import { MailOutlined, KeyOutlined } from "@ant-design/icons";
 
-import classes from "./LoginForm.module.scss";
+import classes from "./LoginForm.module.less";
 import Link from "next/link";
 import { Form } from "~/components";
 
-const LoginForm = ({
-  errors,
-  touched,
-  isSubmitting,
-  values,
-  handleChange,
-  handleSubmit,
-  handleBlur,
-}) => {
+const LoginForm = ({ isSubmitting }) => {
   return (
     <div className={classNames(classes.container)}>
       <Col sm={{ span: 6, offset: 9 }}>
