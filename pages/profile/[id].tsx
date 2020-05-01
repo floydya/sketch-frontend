@@ -10,7 +10,7 @@ import {
   FacebookFilled,
   TwitterCircleFilled,
   InstagramFilled,
-  HeartOutlined
+  HeartOutlined,
 } from "@ant-design/icons";
 import classes from "./Profile.module.less";
 
@@ -31,7 +31,12 @@ const Profile: NextPage<IProps> = ({ user }) => {
               {user.get_full_name}
             </Avatar>
             <h3 className={classes.full_name}>{user.get_full_name}</h3>
-            <Rate character={<HeartOutlined />} allowHalf disabled value={3.5} />
+            <Rate
+              character={<HeartOutlined />}
+              allowHalf
+              disabled
+              value={3.5}
+            />
           </div>
           <div className={classes.details}>
             <p>
@@ -73,19 +78,16 @@ const Profile: NextPage<IProps> = ({ user }) => {
         >
           {/* {tabs[activeTab]} */}
           <List itemLayout="vertical">
-            {Array.from(new Array(5)).map(() => (
+            {Array.from(new Array(5)).map((_, i) => (
               <List.Item
+                key={i}
                 actions={[
                   <Tag color="success">Выполнено</Tag>,
                   <Tag color="default">21.04.2020</Tag>,
                 ]}
               >
                 <List.Item.Meta
-                  title={
-                    <h3>
-                      <a href="#">Тестовый заказ</a>
-                    </h3>
-                  }
+                  title={<a href="#">Тестовый заказ</a>}
                   description={
                     <>
                       <Tag closable={false}>Жанр 1</Tag>
